@@ -1,0 +1,13 @@
+{
+  "name": "splitkar",
+  "version": "1.0.0",
+  "description": "SplitKar - Group Expense Management Platform",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "start": "cd backend && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
