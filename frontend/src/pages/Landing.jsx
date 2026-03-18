@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ShaderAnimation } from '../components/ui/ShaderAnimation';
 import { Zap, Users, Receipt, CreditCard, Bell, BarChart2, Shield, ArrowRight, CheckCircle } from 'lucide-react';
 
 const FEATURES = [
@@ -34,35 +35,42 @@ export default function Landing() {
       </nav>
 
       {/* Hero */}
-      <section className="relative px-6 pt-24 pb-20 text-center max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium mb-8 animate-fade-in">
-          <Zap size={14} />
-          Built for Indian groups · INR · UPI · Razorpay
-        </div>
-        <h1 className="font-display text-5xl sm:text-6xl font-bold text-white leading-tight mb-6 animate-slide-up">
-          Split expenses.<br />
-          <span className="text-brand-400">Not friendships.</span>
-        </h1>
-        <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-10 animate-slide-up">
-          SplitKar is the smartest way for Indian groups to track shared expenses, split bills fairly,
-          and settle up instantly — all in one place.
-        </p>
-        <div className="flex items-center justify-center gap-4 animate-slide-up">
-          <Link to="/register" className="btn-primary flex items-center gap-2 px-6 py-3 text-base">
-            Start for free <ArrowRight size={18} />
-          </Link>
-          <Link to="/login" className="btn-secondary flex items-center gap-2 px-6 py-3 text-base">
-            Sign in
-          </Link>
-        </div>
+      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+        {/* Shader background */}
+        <ShaderAnimation />
 
-        {/* Social proof */}
-        <div className="flex items-center justify-center gap-6 mt-12 text-slate-500 text-sm">
-          {['No credit card required', 'Free to use', 'Real-time sync'].map((t) => (
-            <span key={t} className="flex items-center gap-1.5">
-              <CheckCircle size={14} className="text-brand-500" /> {t}
-            </span>
-          ))}
+        {/* Dark overlay so text is readable */}
+        <div className="absolute inset-0 bg-black/50 z-0" />
+
+        {/* All hero content — add z-10 to sit above shader */}
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium mb-8 animate-fade-in">
+            <Zap size={14} />
+            Built for Indian groups · INR · UPI · Razorpay
+          </div>
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-white leading-tight mb-6 animate-slide-up">
+            Split expenses.<br />
+            <span className="text-brand-400">Not friendships.</span>
+          </h1>
+          <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10 animate-slide-up">
+            SplitKar is the smartest way for Indian groups to track shared expenses, split bills fairly,
+            and settle up instantly — all in one place.
+          </p>
+          <div className="flex items-center justify-center gap-4 animate-slide-up">
+            <Link to="/register" className="btn-primary flex items-center gap-2 px-6 py-3 text-base">
+              Start for free <ArrowRight size={18} />
+            </Link>
+            <Link to="/login" className="btn-secondary flex items-center gap-2 px-6 py-3 text-base">
+              Sign in
+            </Link>
+          </div>
+          <div className="flex items-center justify-center gap-6 mt-12 text-slate-400 text-sm">
+            {['No credit card required', 'Free to use', 'Real-time sync'].map((t) => (
+                <span key={t} className="flex items-center gap-1.5">
+          <CheckCircle size={14} className="text-brand-500" /> {t}
+        </span>
+            ))}
+          </div>
         </div>
       </section>
 
