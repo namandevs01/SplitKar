@@ -32,6 +32,42 @@
     @apply bg-slate-900 border border-white/[0.06] rounded-2xl;
     background: linear-gradient(135deg, rgba(26,34,52,0.9) 0%, rgba(17,24,39,0.95) 100%);
     backdrop-filter: blur(12px);
+    /* Fix Recharts tooltip white background */
+    .recharts-tooltip-wrapper .recharts-default-tooltip {
+      background-color: #1a2234 !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-radius: 12px !important;
+      color: #f1f5f9 !important;
+    }
+
+    .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-label {
+      color: #94a3b8 !important;
+    }
+
+    .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-item {
+      color: #f1f5f9 !important;
+    }
+
+    /* Fix Recharts legend text */
+    .recharts-legend-item-text {
+      color: #94a3b8 !important;
+    }
+
+    /* Fix Recharts axis text */
+    .recharts-cartesian-axis-tick-value {
+      fill: #64748b !important;
+    }
+
+    /* Fix Recharts active dot white fill */
+    .recharts-active-dot circle {
+      fill: #22c55e !important;
+      stroke: #0a0f1e !important;
+    }
+
+    /* Fix Recharts cursor (hover area) */
+    .recharts-rectangle.recharts-tooltip-cursor {
+      fill: rgba(255,255,255,0.04) !important;
+    }
   }
   .btn-primary {
     @apply bg-brand-500 hover:bg-brand-600 text-white font-semibold px-5 py-2.5 rounded-xl 

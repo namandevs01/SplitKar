@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ShaderAnimation } from '../components/ui/ShaderAnimation';
+import { GlowingEffect } from '../components/ui/GlowingEffect';
 import { Zap, Users, Receipt, CreditCard, Bell, BarChart2, Shield, ArrowRight, CheckCircle } from 'lucide-react';
 
 const FEATURES = [
@@ -46,7 +47,7 @@ export default function Landing() {
         <div className="relative z-10 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium mb-8 animate-fade-in">
             <Zap size={14} />
-            Built for Indian groups · INR · UPI · Razorpay
+            Built for India · INR · UPI
           </div>
           <h1 className="font-display text-5xl sm:text-6xl font-bold text-white leading-tight mb-6 animate-slide-up">
             Split expenses.<br />
@@ -54,7 +55,7 @@ export default function Landing() {
           </h1>
           <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10 animate-slide-up">
             SplitKar is the smartest way for Indian groups to track shared expenses, split bills fairly,
-            and settle up instantly — all in one place.
+            and settle up instantly all in one place.
           </p>
           <div className="flex items-center justify-center gap-4 animate-slide-up">
             <Link to="/register" className="btn-primary flex items-center gap-2 px-6 py-3 text-base">
@@ -92,20 +93,69 @@ export default function Landing() {
       </section>
 
       {/* Features */}
-      <section className="px-6 py-16 max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl font-bold text-white text-center mb-4">Everything you need</h2>
-        <p className="text-slate-400 text-center mb-12">All the tools to manage shared finances, without the spreadsheet headaches.</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {FEATURES.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="card p-5 hover:border-brand-500/20 transition-all duration-300 group">
-              <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400 mb-4 group-hover:bg-brand-500/20 transition-colors">
-                <Icon size={20} />
-              </div>
-              <h3 className="font-semibold text-white mb-2">{title}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
+      {/*<section className="px-6 py-16 max-w-5xl mx-auto">*/}
+      {/*  <h2 className="font-display text-3xl font-bold text-white text-center mb-4">Everything you need</h2>*/}
+      {/*  <p className="text-slate-400 text-center mb-12">All the tools to manage shared finances, without the spreadsheet headaches.</p>*/}
+      {/*  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">*/}
+      {/*    {FEATURES.map(({ icon: Icon, title, desc }) => (*/}
+      {/*      <div key={title} className="card p-5 hover:border-brand-500/20 transition-all duration-300 group">*/}
+      {/*        <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400 mb-4 group-hover:bg-brand-500/20 transition-colors">*/}
+      {/*          <Icon size={20} />*/}
+      {/*        </div>*/}
+      {/*        <h3 className="font-semibold text-white mb-2">{title}</h3>*/}
+      {/*        <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>*/}
+      {/*      </div>*/}
+      {/*    ))}*/}
+      {/*  </div>*/}
+      {/*</section>*/}
+      <section id="features" className="px-6 py-16 max-w-5xl mx-auto">
+        <h2 className="font-display text-3xl font-bold text-white text-center mb-4">
+          Everything you need
+        </h2>
+        <p className="text-slate-400 text-center mb-12">
+          All the tools to manage shared finances, without the spreadsheet headaches.
+        </p>
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:grid-rows-2">
+          {FEATURES.map(({ icon: Icon, title, desc }, i) => {
+            const areas = [
+              "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",
+              "md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]",
+              "md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]",
+              "md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]",
+              "md:[grid-area:3/1/4/7] xl:[grid-area:2/8/3/13]",
+              "md:[grid-area:3/7/4/13] xl:[grid-area:2/8/3/13]",
+            ];
+            return (
+                <li key={title} className={`min-h-[14rem] list-none ${areas[i] || ''}`}>
+                  <div className="relative h-full rounded-[1.25rem] border border-white/10 p-2 md:rounded-[1.5rem] md:p-3">
+                    <GlowingEffect
+                        spread={40}
+                        glow={true}
+                        disabled={false}
+                        proximity={64}
+                        inactiveZone={0.01}
+                        borderWidth={2}
+                    />
+                    <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl bg-slate-900/80 border border-white/[0.06] p-6 shadow-sm backdrop-blur-sm">
+                      <div className="relative flex flex-1 flex-col justify-between gap-3">
+                        <div className="w-fit rounded-xl border border-brand-500/20 bg-brand-500/10 p-2.5">
+                          <Icon size={20} className="text-brand-400" />
+                        </div>
+                        <div className="space-y-2">
+                          <h3 className="text-lg font-semibold text-white leading-snug">
+                            {title}
+                          </h3>
+                          <p className="text-sm text-slate-400 leading-relaxed">
+                            {desc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+            );
+          })}
+        </ul>
       </section>
 
       {/* CTA */}
@@ -130,7 +180,7 @@ export default function Landing() {
           </div>
           <span className="text-slate-400 font-medium">SplitKar</span>
         </div>
-        <p>Built with ❤️ by the SplitKar team · GLA University, Mathura</p>
+        <p>Built with ❤️ by the SplitKar team.</p>
       </footer>
     </div>
   );
