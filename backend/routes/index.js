@@ -3,35 +3,15 @@ const { body } = require('express-validator');
 const passport = require('../config/passport');
 const { protect } = require('../middleware/auth');
 
-const {
-  register, login, googleCallback, sendOtp, verifyOtp,
-  getMe, updateMe, changePassword,
-} = require('../controllers/authController');
-
-const {
-  createGroup, getMyGroups, getGroup, updateGroup,
-  addMember, removeMember, deleteGroup, getActivity,
-} = require('../controllers/groupController');
-
-const {
-  addExpense, getExpenses, getExpense,
-  updateExpense, deleteExpense, getAnalytics,
-} = require('../controllers/expenseController');
-
-const {
-  initiateSettlement, verifySettlement,
-  getGroupSettlements, getMySettlements, manualSettlement,
-} = require('../controllers/settlementController');
-
-const {
-  getNotifications, markRead, markAllRead, deleteNotification,
-} = require('../controllers/notificationController');
-
+const { register, login, googleCallback, sendOtp, verifyOtp, getMe, updateMe, changePassword,} = require('../controllers/authController');
+const {createGroup, getMyGroups, getGroup, updateGroup,addMember, removeMember, deleteGroup, getActivity,} = require('../controllers/groupController');
+const {addExpense, getExpenses, getExpense,updateExpense, deleteExpense, getAnalytics,} = require('../controllers/expenseController');
+const { initiateSettlement, verifySettlement,getGroupSettlements, getMySettlements, manualSettlement} = require('../controllers/settlementController');
+const { getNotifications, markRead, markAllRead, deleteNotification } = require('../controllers/notificationController');
 const { searchUsers, getUserProfile } = require('../controllers/userController');
 
 const router = express.Router();
 
-// ─── AUTH ────────────────────────────────────────────────────────────────────
 router.post('/auth/register', [
   body('name').notEmpty().trim(),
   body('email').isEmail().normalizeEmail(),
@@ -53,7 +33,6 @@ router.get('/auth/me', protect, getMe);
 router.put('/auth/me', protect, updateMe);
 router.put('/auth/change-password', protect, changePassword);
 
-// ─── GROUPS ──────────────────────────────────────────────────────────────────
 router.post('/groups', protect, createGroup);
 router.get('/groups', protect, getMyGroups);
 router.get('/groups/:id', protect, getGroup);
@@ -63,7 +42,6 @@ router.post('/groups/:id/members', protect, addMember);
 router.delete('/groups/:id/members/:userId', protect, removeMember);
 router.get('/groups/:id/activity', protect, getActivity);
 
-// ─── EXPENSES ────────────────────────────────────────────────────────────────
 router.post('/groups/:groupId/expenses', protect, addExpense);
 router.get('/groups/:groupId/expenses', protect, getExpenses);
 router.get('/groups/:groupId/expenses/:id', protect, getExpense);
@@ -71,18 +49,15 @@ router.put('/groups/:groupId/expenses/:id', protect, updateExpense);
 router.delete('/groups/:groupId/expenses/:id', protect, deleteExpense);
 router.get('/groups/:groupId/analytics', protect, getAnalytics);
 
-// ─── SETTLEMENTS ─────────────────────────────────────────────────────────────
 router.post('/settlements/initiate', protect, initiateSettlement);
 router.post('/settlements/verify', protect, verifySettlement);
 router.post('/settlements/manual', protect, manualSettlement);
 router.get('/settlements/my', protect, getMySettlements);
 router.get('/groups/:groupId/settlements', protect, getGroupSettlements);
 
-// ─── USERS ───────────────────────────────────────────────────────────────────
 router.get('/users/search', protect, searchUsers);
 router.get('/users/:id/profile', protect, getUserProfile);
 
-// ─── NOTIFICATIONS ───────────────────────────────────────────────────────────
 router.get('/notifications', protect, getNotifications);
 router.put('/notifications/read-all', protect, markAllRead);
 router.put('/notifications/:id/read', protect, markRead);

@@ -15,13 +15,11 @@ const setupSocket = require('./socket/index');
 const setupCronJobs = require('./utils/cronJobs');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
-// Load MySQL models (ensures associations are set up)
 require('./models/mysql/index');
 
 const app = express();
 const server = http.createServer(app);
 
-// ─── Socket.io ───────────────────────────────────────────────────────────────
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
@@ -31,7 +29,6 @@ const io = new Server(server, {
 });
 setupSocket(io);
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
@@ -42,36 +39,45 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(passport.initialize());
 
-// Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 200,
   message: { success: false, message: 'Too many requests, please try again later.' },
 });
 app.use('/api/', limiter);
 
-// ─── Routes ───────────────────────────────────────────────────────────────────
 app.use('/api', routes);
 
-// Health check
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
-// ─── Error handling ───────────────────────────────────────────────────────────
 app.use(notFound);
 app.use(errorHandler);
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 
 const start = async () => {
-  await connectMySQL();
-  await connectMongoDB();
-  setupCronJobs();
+  try {
+    await connectMySQL();
+    await connectMongoDB();
+    setupCronJobs();
 
-  server.listen(PORT, () => {
-    console.log(`\n🚀 SplitKar API running on http://localhost:${PORT}`);
-    console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}\n`);
-  });
+    server.listen(PORT, () => {
+      console.log(`\nSplitKar API running on http://localhost:${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err?.message || err);
+    process.exit(1);
+  }
 };
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled promise rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
+  process.exit(1);
+});
 
 start();

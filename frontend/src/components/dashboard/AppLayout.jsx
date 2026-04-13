@@ -70,10 +70,10 @@ export default function AppLayout() {
   // );
   return (
       <div className="flex h-screen overflow-hidden">
-        {/* Animated collapsible sidebar */}
+        {/*Animated collapsible sidebar*/}
         <AnimatedSidebar navItems={NAV_ITEMS} unreadCount={unreadCount} />
 
-        {/* Main content */}
+        {/*Main content */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <main className="flex-1 overflow-y-auto p-4 lg:p-8">
             <div className="max-w-6xl mx-auto">
