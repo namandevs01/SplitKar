@@ -1,8 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard, Users, Receipt, CreditCard,
-  Bell, Settings, LogOut, Zap, ChevronRight,
-} from 'lucide-react';
+import {LayoutDashboard, Users, Receipt,CreditCard, Bell, Settings, LogOut, Zap, ChevronRight} from 'lucide-react';
 import useAuthStore from '../../context/authStore';
 
 const NAV = [

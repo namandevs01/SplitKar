@@ -4,7 +4,9 @@
   "description": "SplitKar Backend API",
   "main": "server.js",
   "scripts": {
+    "prestart": "npx kill-port 5000",
     "start": "node server.js",
+    "predev": "npx kill-port 5000",
     "dev": "nodemon server.js"
   },
   "dependencies": {

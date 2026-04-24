@@ -7,14 +7,14 @@ const FEATURES = [
   { icon: Receipt, title: 'Smart Expense Splitting', desc: 'Split equally, by percentage, exact amounts, or custom shares. Every scenario covered.' },
   { icon: Users, title: 'Group Management', desc: 'Create unlimited groups for trips, home, events, and projects. Invite members instantly.' },
   { icon: CreditCard, title: 'Integrated Payments', desc: 'Pay directly via Razorpay or UPI QR code without leaving the app.' },
-  { icon: Bell, title: 'Real-time Notifications', desc: 'Instant updates when someone adds an expense or settles a payment.' },
+  { icon: Bell, title: 'Realtime Notifications', desc: 'Instant updates when someone adds an expense or settles a payment.' },
   { icon: BarChart2, title: 'Analytics & Reports', desc: 'Visualise spending patterns by category, month, and group member.' },
   { icon: Shield, title: 'Bank-grade Security', desc: 'JWT authentication, encrypted data, and secure payment handling via Razorpay.' },
 ];
 
 const STEPS = [
   { n: '01', title: 'Create a Group', desc: 'Add your friends, roommates, or travel buddies in seconds.' },
-  { n: '02', title: 'Log Expenses', desc: 'Record who paid and choose how to split — equal, percentage, or custom.' },
+  { n: '02', title: 'Log Expenses', desc: 'Record who paid and choose how to split equal, percentage, or custom.' },
   { n: '03', title: 'Settle Up', desc: 'Our algorithm minimises transactions. Pay directly via UPI or Razorpay.' },
 ];
 
@@ -66,7 +66,7 @@ export default function Landing() {
             </Link>
           </div>
           <div className="flex items-center justify-center gap-6 mt-12 text-slate-400 text-sm">
-            {['No credit card required', 'Free to use', 'Real-time sync'].map((t) => (
+            {['No credit card required', 'Free to use', 'Realtime sync'].map((t) => (
                 <span key={t} className="flex items-center gap-1.5">
           <CheckCircle size={14} className="text-brand-500" /> {t}
         </span>
@@ -180,7 +180,7 @@ export default function Landing() {
           </div>
           <span className="text-slate-400 font-medium">SplitKar</span>
         </div>
-        <p>Built with ❤️ by the SplitKar team.</p>
+        <p>Built with ❤️ by SplitKar team.</p>
       </footer>
     </div>
   );

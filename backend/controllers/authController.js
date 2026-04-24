@@ -4,8 +4,6 @@ const MongoUser = require('../models/mongo/UserProfile');
 const Notification = require('../models/mongo/Notification');
 const { generateToken } = require('../middleware/auth');
 
-// @desc    Register new user
-// POST /api/auth/register
 const register = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -22,13 +20,11 @@ const register = async (req, res, next) => {
 
     const user = await User.create({ name, email, password, phone, authProvider: 'local' });
 
-    // Create MongoDB profile
     await MongoUser.create({
       userId: user.id,
       preferences: { currency: 'INR', language: 'en' },
     });
 
-    // Welcome notification
     await Notification.create({
       userId: user.id,
       type: 'general',
@@ -49,8 +45,6 @@ const register = async (req, res, next) => {
   }
 };
 
-// @desc    Login user
-// POST /api/auth/login
 const login = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -87,8 +81,6 @@ const login = async (req, res, next) => {
   }
 };
 
-// @desc    Google OAuth callback
-// GET /api/auth/google/callback
 const googleCallback = async (req, res) => {
   try {
     const token = generateToken(req.user.id);
@@ -98,15 +90,13 @@ const googleCallback = async (req, res) => {
   }
 };
 
-// @desc    Send OTP for phone login
-// POST /api/auth/send-otp
 const sendOtp = async (req, res, next) => {
   try {
     const { phone } = req.body;
     if (!phone) return res.status(400).json({ success: false, message: 'Phone is required' });
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const expiry = new Date(Date.now() + 10 * 60 * 1000);
 
     let user = await User.findOne({ where: { phone } });
     if (!user) {
@@ -123,7 +113,6 @@ const sendOtp = async (req, res, next) => {
       await user.update({ otpCode: otp, otpExpiry: expiry });
     }
 
-    // In production: send via SMS provider (Twilio, MSG91, etc.)
     console.log(`📱 OTP for ${phone}: ${otp}`);
 
     res.json({ success: true, message: 'OTP sent successfully', ...(process.env.NODE_ENV === 'development' && { otp }) });
@@ -132,8 +121,6 @@ const sendOtp = async (req, res, next) => {
   }
 };
 
-// @desc    Verify OTP
-// POST /api/auth/verify-otp
 const verifyOtp = async (req, res, next) => {
   try {
     const { phone, otp } = req.body;
@@ -154,8 +141,6 @@ const verifyOtp = async (req, res, next) => {
   }
 };
 
-// @desc    Get current user profile
-// GET /api/auth/me
 const getMe = async (req, res, next) => {
   try {
     const mongoProfile = await MongoUser.findOne({ userId: req.user.id });
@@ -165,8 +150,6 @@ const getMe = async (req, res, next) => {
   }
 };
 
-// @desc    Update profile
-// PUT /api/auth/me
 const updateMe = async (req, res, next) => {
   try {
     const { name, phone, bio, upiId, avatar } = req.body;
@@ -182,8 +165,6 @@ const updateMe = async (req, res, next) => {
   }
 };
 
-// @desc    Change password
-// PUT /api/auth/change-password
 const changePassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;

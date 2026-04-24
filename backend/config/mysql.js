@@ -8,7 +8,9 @@ const sequelize = new Sequelize(
     host: process.env.MYSQL_HOST || 'localhost',
     port: process.env.MYSQL_PORT || 3306,
     dialect: 'mysql',
-    logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    // Keep terminal output high-signal by default.
+    // Opt-in to SQL logging via MYSQL_LOG_SQL=true.
+    logging: process.env.MYSQL_LOG_SQL === 'true' ? console.log : false,
     pool: {
       max: 10,
       min: 0,
@@ -22,8 +24,8 @@ const connectMySQL = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ MySQL connected successfully');
-    // Sync all models (alter: true updates schema without dropping data)
-    await sequelize.sync({ alter: true });
+    const shouldAlter = process.env.MYSQL_SYNC_ALTER === 'true';
+    await sequelize.sync({ alter: shouldAlter });
     console.log('✅ MySQL models synced');
   } catch (error) {
     console.error('❌ MySQL connection failed:', error.message);

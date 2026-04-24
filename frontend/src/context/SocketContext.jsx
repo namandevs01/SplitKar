@@ -10,7 +10,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (isAuthenticated && token) {
-      socketRef.current = io('/', { auth: { token }, transports: ['websocket'] });
+      socketRef.current = io('/', { auth: { token } });
       socketRef.current.on('connect', () => console.log('🔌 Socket connected'));
       socketRef.current.on('connect_error', (e) => console.error('Socket error:', e.message));
     }
