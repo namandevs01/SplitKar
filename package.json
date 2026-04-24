@@ -11,6 +11,8 @@
     "concurrently": "^8.2.2"
   },
   "dependencies": {
+    "framer-motion": "^12.38.0",
+    "motion": "^12.38.0",
     "three": "^0.183.2"
   }
 }
